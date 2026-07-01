@@ -34,6 +34,7 @@ int main() {
             }
         }
 
+        //No longer safe for people with epilepsy
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Set render draw color to black
         SDL_RenderClear(renderer); // Clear the renderer
 
