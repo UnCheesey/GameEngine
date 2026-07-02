@@ -1,26 +1,14 @@
-#include "../Engine/Engine.cpp"
+#include "Engine.h"
 #include "SDL3/SDL.h"
+#include "Renderer.h"
 
 #include <iostream>
 
 int main() {
-	SDL_Init(SDL_INIT_VIDEO);
+    nu::Renderer render;
+    render.Initialize("Game Engine", 1920, 1024);
 
-    SDL_Window* window = SDL_CreateWindow("SDL3 Project", 1280, 1024, 0);
-    if (window == nullptr) {
-        std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
-        SDL_Quit();
-        return 1;
-    }
-
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL);
-    if (renderer == nullptr) {
-        std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
-        SDL_DestroyWindow(window);
-        SDL_Quit();
-        return 1;
-    }
-
+    // handle events
     SDL_Event e;
     bool quit = false;
 
@@ -34,25 +22,21 @@ int main() {
             }
         }
 
-        //No longer safe for people with epilepsy
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Set render draw color to black
-        SDL_RenderClear(renderer); // Clear the renderer
+        render.SetColor(0, 0, 0);
+        render.Clear();
 
-        SDL_SetRenderDrawColor(renderer, rand() % 256, rand() % 256, rand() % 256, 255);
-        SDL_RenderPoint(renderer, rand() % 1280, rand() % 1024);
+        for (int i = 0; i < 1000; i++) {
+            render.SetColor(rand() % 256, rand() % 256, rand() % 256, 255);
+            render.DrawPoint(rand() % 1280, rand() % 1024);
+        }
 
-        SDL_SetRenderDrawColor(renderer, rand() % 256, rand() % 256, rand() % 256, 255); // Set render draw color to green
-        SDL_RenderFillRect(renderer, &greenSquare); // Render the rectangle
+        render.SetColor(rand() % 256, rand() % 256, rand() % 256, 255);
+        render.DrawFillRect(rand() % 256, rand() % 256, rand() % 256, rand() % 256);
 
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        SDL_RenderDebugText(renderer, 10, 10, "Hello World!");
-
-        SDL_RenderPresent(renderer); // Render the screen
+        render.Present();
     }
 
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+    render.Shutdown();
 
     return 0;
 }
