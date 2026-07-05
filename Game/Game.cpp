@@ -12,9 +12,6 @@ int main() {
     SDL_Event e;
     bool quit = false;
 
-    // Define a rectangle
-    SDL_FRect greenSquare{ 270, 190, 200, 200 };
-
     while (!quit) {
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_EVENT_QUIT) {
@@ -25,13 +22,20 @@ int main() {
         render.SetColor(0, 0, 0);
         render.Clear();
 
-        for (int i = 0; i < 1000; i++) {
-            render.SetColor(rand() % 256, rand() % 256, rand() % 256, 255);
-            render.DrawPoint(rand() % 1280, rand() % 1024);
+        for (int i = 0; i < 10; i++) {
+            render.SetColor(rand() % 256, rand() % 256, rand() % 256);
+            render.DrawLine(rand() % 1920, rand() % 1024, rand() % 1920, rand() % 1024);
         }
 
-        render.SetColor(rand() % 256, rand() % 256, rand() % 256, 255);
-        render.DrawFillRect(rand() % 256, rand() % 256, rand() % 256, rand() % 256);
+        for (int i = 0; i < 1000; i++) {
+            render.SetColor(rand() % 256, rand() % 256, rand() % 256);
+            render.DrawPoint(rand() % 1920, rand() % 1024);
+        }
+
+        for (int i = 0; i < 5; i++) {
+            render.SetColor(rand() % 256, rand() % 256, rand() % 256);
+            render.DrawRect(rand() % 1920, rand() % 1024, 100, 100);
+        }
 
         render.Present();
     }

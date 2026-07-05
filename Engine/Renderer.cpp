@@ -42,15 +42,18 @@ namespace nu
         SDL_RenderPoint(m_renderer, x, y);
     }
 
+    void Renderer::DrawLine(float xStart, float yStart, float xEnd, float yEnd) {
+        SDL_RenderLine(m_renderer, xStart, yStart, xEnd, yEnd);
+    }
+
     void Renderer::DrawFillRect(float x, float y, float w, float h) {
         SDL_FRect rect{ x, y, w, h };
         SDL_RenderFillRect(m_renderer, &rect);
-
     }
 
     void Renderer::DrawRect(float x, float y, float w, float h) {
-        SDL_FRect ret{ x, y, h, w };
-        SDL_Renderer* m_renderer = nullptr;
+        SDL_FRect rect{ x, y, w, h };
+        SDL_RenderRect(m_renderer, &rect);
     }
 
     void Renderer::Shutdown() {
