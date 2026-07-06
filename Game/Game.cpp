@@ -1,45 +1,62 @@
 #include "Engine.h"
-#include "SDL3/SDL.h"
-#include "Renderer.h"
 
 #include <iostream>
+#include <vector>
+
+using namespace nu;
 
 int main() {
-    nu::Renderer render;
+    // INITIALIZATION
+    Renderer render;
     render.Initialize("Game Engine", 1920, 1024);
 
-    // handle events
-    SDL_Event e;
+    // std::cout << sizeof(Vector2) << std::endl;
+    Vector2 vel{ 0.5f, 0.0f };
+
+    std::vector<Vector2> v;
+
+    for (int i = 0; i < 300; i++) {
+        v.push_back({ nu::RandomFloat(1920), nu::RandomFloat(1024) });
+    }
+
+    // GAME LOOP
     bool quit = false;
 
     while (!quit) {
-        while (SDL_PollEvent(&e)) {
-            if (e.type == SDL_EVENT_QUIT) {
+
+        // UPDATE
+        SDL_Event event;
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_EVENT_QUIT) {
                 quit = true;
             }
         }
 
-        render.SetColor(0, 0, 0);
+        // RENDER
+        render.SetColor(0.0f, 0.0f, 0.0f);
         render.Clear();
 
-        for (int i = 0; i < 10; i++) {
-            render.SetColor(rand() % 256, rand() % 256, rand() % 256);
-            render.DrawLine(rand() % 1920, rand() % 1024, rand() % 1920, rand() % 1024);
+        /*for (int i = 0; i < 10; i++) {
+            render.SetColor(nu::RandomFloat(), nu::RandomFloat(), nu::RandomFloat());
+            render.DrawLine(nu::RandomFloat(1920), nu::RandomFloat(1024), nu::RandomFloat(1920), nu::RandomFloat(1024));
+        }*/
+
+        for (size_t i = 0; i < v.size(); i++) {
+            render.SetColor(nu::RandomFloat(), nu::RandomFloat(), nu::RandomFloat());
+
+            v[i] = v[i] + vel;
+            render.DrawPoint(v[i].x, v[i].y);
         }
 
-        for (int i = 0; i < 1000; i++) {
-            render.SetColor(rand() % 256, rand() % 256, rand() % 256);
-            render.DrawPoint(rand() % 1920, rand() % 1024);
-        }
-
-        for (int i = 0; i < 5; i++) {
-            render.SetColor(rand() % 256, rand() % 256, rand() % 256);
-            render.DrawRect(rand() % 1920, rand() % 1024, 100, 100);
-        }
+        /*for (int i = 0; i < 5; i++) {
+            render.SetColor(nu::RandomFloat(), nu::RandomFloat(), nu::RandomFloat());
+            render.DrawRect(nu::RandomFloat(1920), nu::RandomFloat(1024), 100, 100);
+        }*/
 
         render.Present();
     }
 
+    // SHUTDOWN
     render.Shutdown();
 
     return 0;
