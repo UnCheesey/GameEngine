@@ -17,17 +17,14 @@ namespace nu
 		void SetColor(float r, float g, float b, float a = 1.0f) const;
 
 		void DrawPoint(float x, float y) const;
-		void DrawLine(float xStart, float yStart, float xEnd, float yEnd) const;
+		void DrawLine(float x1, float y1, float x2, float y2) const;
 		void DrawFillRect(float x, float y, float w, float h) const;
 		void DrawRect(float x, float y, float w, float h) const;
 
-		int GetWidth() const {
-			return m_width;
-		}
+		void DrawModel(const class Model& model, const struct Transform& transform) const;
 
-		int GetHeight() const {
-			return m_height;
-		}
+		int GetWidth() const { return m_width; }
+		int GetHeight() const { return m_height; }
 
 	private:
 		SDL_Window* m_window = nullptr;

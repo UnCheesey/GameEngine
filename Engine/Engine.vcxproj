@@ -143,6 +143,8 @@
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="MathUtils.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Renderer.h" />

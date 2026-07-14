@@ -15,12 +15,12 @@ namespace nu {
     }
 
     void Actor::Draw(const Renderer& render) const {
-        render.SetColor(1.0f, 1.0f, 1.0f);
-        
-        render.DrawFillRect(m_transform.position.x - (m_transform.scale * 0.5f),
+        /*render.DrawFillRect(m_transform.position.x - (m_transform.scale * 0.5f),
                             m_transform.position.y - (m_transform.scale * 0.5f),
                             m_transform.scale,
-                            m_transform.scale);
+                            m_transform.scale);*/
+
+        render.DrawModel(m_model, m_transform);
     }
 
 }

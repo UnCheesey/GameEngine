@@ -6,6 +6,7 @@
 using namespace nu;
 
 int main() {
+
     // INITIALIZATION
     Renderer render;
     render.Initialize("Game Engine", 1920, 1024);
@@ -15,11 +16,13 @@ int main() {
 
     nu::Time time;
 
-    Actor player( Transform ( Vector2 { 640.0f, 512.0f }, 0.0f, 50.0f ) );
+    Mesh mesh{ { Vector2{ -3, 3 }, Vector2{ 3, 3 }, Vector2{ 0, 0 } } , Color{ 0.0f, 0.0f, 1.0f } };
+    Actor player{ Transform{Vector2 { 640.0f, 512.0f }, 0.0f, 50.0f }, std::vector<Mesh>{ mesh } };
 
-    int speed = 400;
-    Vector2 position{ 640, 512 };
+    Vector2 position{ 640.0f, 512.0f };
     Vector2 velocity{ 0.0f, 0.0f };
+    float speed = 800.0f;
+
     std::vector<Vector2> points;
 
     Vector2 mousePos;

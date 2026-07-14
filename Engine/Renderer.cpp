@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Renderer.h"
+#include "Transform.h"
+#include "Model.h"
 
 #include <iostream>
 
@@ -31,6 +33,12 @@ namespace nu
         return true;
 	}
 
+    void Renderer::Shutdown() {
+        SDL_DestroyRenderer(m_renderer);
+        SDL_DestroyWindow(m_window);
+        SDL_Quit();
+    }
+
     void Renderer::SetColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) const {
         SDL_SetRenderDrawColor(m_renderer, r, g, b, a);
     }
@@ -51,8 +59,8 @@ namespace nu
         SDL_RenderPoint(m_renderer, x, y);
     }
 
-    void Renderer::DrawLine(float xStart, float yStart, float xEnd, float yEnd) const {
-        SDL_RenderLine(m_renderer, xStart, yStart, xEnd, yEnd);
+    void Renderer::DrawLine(float x1, float y1, float x2, float y2) const {
+        SDL_RenderLine(m_renderer, x1, y1, x2, y2);
     }
 
     void Renderer::DrawFillRect(float x, float y, float w, float h) const {
@@ -65,9 +73,27 @@ namespace nu
         SDL_RenderRect(m_renderer, &rect);
     }
 
-    void Renderer::Shutdown() {
-        SDL_DestroyRenderer(m_renderer);
-        SDL_DestroyWindow(m_window);
-        SDL_Quit(); 
+    void Renderer::DrawModel(const Model& model, const Transform& transform) const {
+
+        SetColor(model.GetMeshes()[0].GetColor().r, model.GetMeshes()[0].GetColor().g, model.GetMeshes()[0].GetColor().b);
+        /*SetColor(1.0f, 1.0f, 1.0f);*/
+
+        for (auto mesh : model.GetMeshes()) {
+            
+            auto& points = mesh.GetPoints();
+            for (int i = 0; i < points.size() - 1; i++) {
+                Vector2 v1 = points[i]; // local space
+                Vector2 v2 = points[i + 1]; // local space
+
+                // convert to world space
+                v1 *= transform.scale;
+                v2 *= transform.scale;
+
+                v1 += transform.position;
+                v2 += transform.position;
+
+                DrawLine(v1.x, v1.y, v2.x, v2.y);
+            }
+        }
     }
 }
