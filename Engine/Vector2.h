@@ -44,11 +44,14 @@ namespace nu
 		float Dot(const Vector2& v) const { return (this->x * v.x) + (this->y * v.y); }
 		float Angle() const { return  std::atan2(this->y, this->x); }
 		float AngleBetween(const Vector2& v) const { return  std::acos(Dot(v)); }
-		Vector2 Rotate(const Vector2 v, float radians) const {
-			float x = this->x * std::cos(radians) - this->y * sin(radians);
-			float y = this->x * std::sin(radians) + this->y * cos(radians);
 
-			return { x, y };
+		Vector2 Rotate(float radians) const {
+			Vector2 v;
+
+			v.x = this->x * std::cos(radians) - this->y * std::sin(radians);
+			v.y = this->x * std::sin(radians) + this->y * std::cos(radians);
+
+			return v;
 		}
 	};
 }

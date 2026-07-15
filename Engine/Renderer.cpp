@@ -2,6 +2,7 @@
 #include "Renderer.h"
 #include "Transform.h"
 #include "Model.h"
+#include "MathUtils.h"
 
 #include <iostream>
 
@@ -75,11 +76,9 @@ namespace nu
 
     void Renderer::DrawModel(const Model& model, const Transform& transform) const {
 
-        SetColor(model.GetMeshes()[0].GetColor().r, model.GetMeshes()[0].GetColor().g, model.GetMeshes()[0].GetColor().b);
-        /*SetColor(1.0f, 1.0f, 1.0f);*/
-
         for (auto mesh : model.GetMeshes()) {
             
+            SetColor(mesh.GetColor().r, mesh.GetColor().g, mesh.GetColor().b, 1.0f);
             auto& points = mesh.GetPoints();
             for (int i = 0; i < points.size() - 1; i++) {
                 Vector2 v1 = points[i]; // local space
@@ -88,6 +87,9 @@ namespace nu
                 // convert to world space
                 v1 *= transform.scale;
                 v2 *= transform.scale;
+
+                v1 = v1.Rotate(transform.rotation * DegToRad);
+                v2 = v2.Rotate(transform.rotation * DegToRad);
 
                 v1 += transform.position;
                 v2 += transform.position;
