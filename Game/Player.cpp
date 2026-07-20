@@ -3,13 +3,19 @@
 #include "Engine.h"
 
 void Player::Update(float dt) {
-    nu::Vector2 force{ 0.0f, 0.0f };
-    if (nu::engine.GetInput().GetKeyDown(SDL_SCANCODE_W)) force.y = -m_speed;
-    if (nu::engine.GetInput().GetKeyDown(SDL_SCANCODE_A)) force.x = -m_speed;
-    if (nu::engine.GetInput().GetKeyDown(SDL_SCANCODE_S)) force.y = +m_speed;
-    if (nu::engine.GetInput().GetKeyDown(SDL_SCANCODE_D)) force.x = +m_speed;
+    float thrust = 0.0f;
+    if (nu::engine.GetInput().GetKeyDown(SDL_SCANCODE_W)) thrust = +m_speed;
+    if (nu::engine.GetInput().GetKeyDown(SDL_SCANCODE_S)) thrust = -m_speed;
 
-    SetVelocity(GetVelocity() + (force * dt));
+    float rotate = 0.0f;
+    if (nu::engine.GetInput().GetKeyDown(SDL_SCANCODE_A)) rotate = -180.0f;
+    if (nu::engine.GetInput().GetKeyDown(SDL_SCANCODE_D)) rotate = +180.0f;
+    
+    SetRotation(m_transform.rotation +  rotate * dt);
+
+    nu::Vector2 forward{ 1, 0 }; // ->
+    nu::Vector2 velocity = forward.Rotate(m_transform.rotation * nu::DegToRad) * thrust;
+    AddVelocity(velocity * dt);
 
     Actor::Update(dt);
 }
