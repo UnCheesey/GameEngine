@@ -144,6 +144,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\fmod\core\inc;</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -157,8 +158,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="File.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="Input.h" />
@@ -176,6 +177,7 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="File.cpp" />
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="pch.cpp">

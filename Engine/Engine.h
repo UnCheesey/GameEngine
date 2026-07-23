@@ -14,11 +14,10 @@
 #include "Actor.h"
 #include "Scene.h"
 
-
 namespace nu {
 	class Engine {
 	public:
-		Engine() = default;
+		static Engine& Get() { static Engine engine; return engine; }
 
 		bool Initialize();
 		void Shutdown();
@@ -29,12 +28,12 @@ namespace nu {
 		Renderer& GetRenderer() { return m_renderer; }
 		Time& GetTime() { return m_time; }
 
+
 	private:
+		Engine() = default;
+
 		Input m_input;
 		Renderer m_renderer;
 		Time m_time;
-
 	};
-
-	extern Engine engine;
 }
