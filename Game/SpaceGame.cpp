@@ -163,8 +163,9 @@ void SpaceGame::SpawnPlayer() {
     playerDesc.damping = 3.0f;
     playerDesc.speed = 2500.0f;
 
-    std::unique_ptr<Player> m_player = std::make_unique<Player>(playerDesc);
-    m_scene->AddActor(std::move(m_player));
+    std::unique_ptr<Player> player = std::make_unique<Player>(playerDesc);
+    m_player = player.get();
+    m_scene->AddActor(std::move(player));
 }
 
 void SpaceGame::SpawnEnemy() {

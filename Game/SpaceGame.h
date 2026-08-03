@@ -34,7 +34,7 @@ private:
 	void SpawnEnemy();
 
 private:
-	Player* m_player = nullptr;
+	Player* m_player;
 	int m_score = 0;
 	int m_lives = 0;
 
