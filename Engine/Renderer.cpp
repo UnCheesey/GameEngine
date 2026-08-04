@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "MathUtils.h"
 #include "Vector3.h"
+#include "Texture.h"
 
 #include <iostream>
 
@@ -108,5 +109,17 @@ namespace nu
                 DrawLine(v1.x, v1.y, v2.x, v2.y);
             }
         }
+    }
+
+    void Renderer::DrawTexture(Texture* texture, float x, float y) {
+        Vector2 size = texture->GetSize();
+
+        SDL_FRect destRect;
+        destRect.x = x;
+        destRect.y = y;
+        destRect.w = size.y;
+        destRect.h = size.x;
+
+        SDL_RenderTexture(m_renderer, texture->m_texture, NULL, &destRect);
     }
 }

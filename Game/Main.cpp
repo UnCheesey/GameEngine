@@ -19,6 +19,10 @@ int main() {
     SpaceGame game;
     game.Initialize();
 
+    // create texture, using shared_ptr so texture can be shared
+    std::shared_ptr<Texture> texture = std::make_shared<Texture>();
+    texture->Load("Images/random.jpg", Engine::Get().GetRenderer());
+
     // PAINT INITIALIZATION
     /*std::vector<Vector2> points;
     Vector2 mousePos = { 0,0 };*/
@@ -77,10 +81,11 @@ int main() {
         Engine::Get().GetRenderer().SetColor(0.0f, 0.0f, 0.0f);
         Engine::Get().GetRenderer().Clear();
 
-        
-
         // DRAW SCENE
         game.Draw(Engine::Get().GetRenderer());
+
+        // TODO:: get engine renderer.DrawTexture(...get() texture pointer..., 30, 30);
+        Engine::Get().GetRenderer().DrawTexture(texture.get(), 30.0f, 30.0f);
         
         // PRESENT
         Engine::Get().GetRenderer().Present();

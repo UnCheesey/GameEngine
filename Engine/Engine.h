@@ -9,6 +9,7 @@
 
 // Systems
 #include "Renderer.h"
+#include "Texture.h"
 #include "Font.h"
 #include "Text.h"
 #include "Input.h"

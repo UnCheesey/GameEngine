@@ -14,14 +14,6 @@ public:
         m_speed(bulletDesc.speed) {
     }
 
-    Bullet(const nu::Transform& transform, const nu::Model& model) :
-        Actor(transform, model) {
-    }
-
-    Bullet(float speed, const nu::Transform& transform, const nu::Model& model) :
-        m_speed(speed),
-        Actor(transform, model) {
-    }
 
     void Update(float dt) override;
 

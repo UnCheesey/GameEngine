@@ -51,10 +51,9 @@ void SpaceGame::Update(float dt) {
     switch (m_gameState)
     {
     case GameState::Title:
-        /*if (Engine::Get().GetInput().GetKeyPressed(SDL_SCANCODE_SPACE)) {
+        if (Engine::Get().GetInput().GetKeyPressed(SDL_SCANCODE_SPACE)) {
             m_gameState = GameState::StartGame;
-        }*/
-        m_gameState = GameState::StartGame;
+        }
         break;
     case GameState::StartGame:
         m_score = 0;

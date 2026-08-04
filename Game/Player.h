@@ -21,10 +21,6 @@ public:
         m_speed(playerDesc.speed) {
     }
 
-    Player(float speed, const nu::Transform& transform, const nu::Model& model) : 
-        Actor(transform, model), 
-        m_speed(speed){
-    }
 
     void SetWeaponState(WeaponState weaponState) { m_weaponState = weaponState; }
     WeaponState GetWeaponState() const { return m_weaponState; }
