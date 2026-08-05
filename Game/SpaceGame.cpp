@@ -4,25 +4,23 @@
 #include "Enemy.h"
 #include "Pickup.h"
 #include "Assets.h"
-
 #include <memory>
 
 using namespace nu;
 
 bool SpaceGame::Initialize() {
     Game::Initialize();
-
     
-
     m_scene = new Scene();
     m_scene->SetGame(this);
 
     m_titleText = new Text(Resources().GetWithID<Font>("title_font", "Fonts/Blaster.ttf", 64.0f));
-    m_scoreText = new Text(Resources().Get<Font>("Fonts/Blaster.ttf", 32.0f));
-    m_livesText = new Text(Resources().Get<Font>("Fonts/Blaster.ttf", 32.0f));
-    m_weaponText = new Text(Resources().Get<Font>("Fonts/Blaster.ttf", 32.0f));
-    m_gameOverText = new Text(Resources().Get<Font>("Fonts/Blaster.ttf", 64.0f));
-    m_playText = new Text(Resources().Get<Font>("Fonts/Blaster.ttf", 32.0f));
+    m_scoreText = new Text(Resources().GetWithID<Font>("game_font", "Fonts/Blaster.ttf", 32.0f));
+    m_livesText = new Text(Resources().GetWithID<Font>("game_font", "Fonts/Blaster.ttf", 32.0f));
+    m_weaponText = new Text(Resources().GetWithID<Font>("game_font", "Fonts/Blaster.ttf", 32.0f));
+    m_gameOverText = new Text(Resources().GetWithID<Font>("gameover_font", "Fonts/Blaster.ttf", 64.0f));
+    m_playText = new Text(Resources().GetWithID<Font>("play_font", "Fonts/Blaster.ttf", 32.0f));
+
     m_playText->Create(Engine::Get().GetRenderer(), "Press SPACE to play", Color{ 1.0f, 1.0f, 1.0f });
 
     Engine::Get().GetAudio().AddSound("background", "Sounds/space_background.mp3", true);
@@ -32,10 +30,7 @@ bool SpaceGame::Initialize() {
     return true;
 }
 
-void SpaceGame::Update(float dt) {
-
-    
-
+void SpaceGame::Update(float dt) {      
     switch (m_gameState)
     {
     case GameState::Title:

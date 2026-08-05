@@ -17,6 +17,7 @@ namespace nu{
 
 		bool Create(Renderer& renderer, const std::string& text, const Color& color);
 		void Draw(const Renderer& renderer, float x, float y);
+
 		float GetTextWidth();
 		float GetTextHeight();
 

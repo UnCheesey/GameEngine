@@ -83,7 +83,8 @@ int main() {
 
         // DRAW SCENE
         game.Draw(Engine::Get().GetRenderer());
-        Engine::Get().GetRenderer().DrawTexture(*Resources().Get<Texture>("Images/large_grey_01.png", Engine::Get().GetRenderer()), 30.0f, 30.0f);
+        auto texture = Resources().Get<Texture>("Images/large_grey_01.png", Engine::Get().GetRenderer());
+        Engine::Get().GetRenderer().DrawTexture(*texture, 30, 30, 23.0f, 2.0f);
         
         // PRESENT
         Engine::Get().GetRenderer().Present();

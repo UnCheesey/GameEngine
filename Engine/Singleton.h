@@ -4,7 +4,7 @@ namespace nu {
     class Singleton {
     public:
         Singleton(const Singleton&) = delete;
-        Singleton& operator=(const Singleton&) = delete;
+        Singleton& operator = (const Singleton&) = delete;
 
         static T& Instance() {
             static T instance;
