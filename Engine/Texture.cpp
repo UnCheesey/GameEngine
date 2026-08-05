@@ -25,18 +25,15 @@ namespace nu {
         m_texture = SDL_CreateTextureFromSurface(renderer.m_renderer, surface);
 
         SDL_DestroySurface(surface);
-        if (!m_texture)
+        if (!surface)
         {
             std::cerr << "Could not create texture: " << filename << std::endl;
             return false;
         }
 
+        // cache size
+        SDL_GetTextureSize(m_texture, &m_size.x, &m_size.y);
+
         return true;
-    }
-        
-    Vector2 Texture::GetSize() {
-        Vector2 v;
-        SDL_GetTextureSize(m_texture, &v.x, &v.y);
-        return v;
     }
 }

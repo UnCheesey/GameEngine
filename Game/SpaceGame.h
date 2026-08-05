@@ -1,7 +1,7 @@
 #pragma once
 #include "Game.h"
-#include "Font.h"
 #include "Text.h"
+#include <ResourceManager.h>
 
 class Player;
 
@@ -18,7 +18,7 @@ public:
 
 public:
 	SpaceGame() = default;
-	SpaceGame(nu::Scene* scene) : Game(scene) {}
+	SpaceGame(nu::Scene* scene) : Game(scene) {};
 
 	bool Initialize() override;
 
@@ -45,19 +45,14 @@ private:
 
 	GameState m_gameState = GameState::Title;
 
-	nu::Font* m_titleFont{ nullptr };
+
 	nu::Text* m_titleText{ nullptr };
 
-	nu::Font* m_gameOverFont{ nullptr };
 	nu::Text* m_gameOverText{ nullptr };
-
-	nu::Font* m_gameFont{ nullptr };
-	
+		
 	nu::Text* m_scoreText{ nullptr };
 	nu::Text* m_livesText{ nullptr };
 	nu::Text* m_weaponText{ nullptr };
-
-	nu::Font* m_playFont{ nullptr };
 	nu::Text* m_playText{ nullptr };
 
 };

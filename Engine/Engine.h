@@ -37,6 +37,9 @@ namespace nu {
 		Time& GetTime() { return m_time; }
 		ParticleSystem& GetParticleSystem() { return m_particleSystem;  }
 
+		Engine(const Engine&) = delete;
+		Engine& operator = (const Engine&) = delete;
+
 
 	private:
 		Engine() = default;
