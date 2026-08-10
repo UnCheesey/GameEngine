@@ -1,11 +1,22 @@
 #pragma once
 
 #include <cstdlib>
+#include <random>
 
 namespace nu {
 
+	inline std::mt19937& Generator() {
+		static std::random_device randomDevice;
+		static std::mt19937 generator(randomDevice());
+
+		return generator;
+	}
+
+	inline void SeedRandom(unsigned int seed) { Generator().seed(seed); }
+
 	inline int RandomInt() {
-		return rand();
+		static std::uniform_int_distribution<> dist;
+		return dist(Generator());
 	}
 
 	/// <summary>
@@ -14,7 +25,8 @@ namespace nu {
 	/// <param name="max">exclusive</param>
 	/// <returns>Random number 0 and max (exclusive)</returns>
 	inline int RandomInt(int max) {
-		return rand() % max;
+		static std::uniform_int_distribution<> dist(0, max - 1);
+		return dist(Generator());
 	}
 
 	/// <summary>
@@ -24,25 +36,32 @@ namespace nu {
 	/// <param name="max">inclusive</param>
 	/// <returns>Random number min and max inclusive</returns>
 	inline int RandomInt(int min, int max) {
-		return RandomInt((max - min) + 1) + min;
+		if (min > max) std::swap(min, max);
+
+		static std::uniform_int_distribution<> dist(min, max);
+		return dist(Generator());
 	}
 
 	inline float RandomFloat() {
-
-		// rand() = 0 <- RAND_MAX
-		return rand() / (float)RAND_MAX;
+		static std::uniform_real_distribution<> dist(0.0f, 1.0f);
+		return dist(Generator());
 	}
 
 	inline float RandomFloat(float max) {
-
-		// 0 <-> 1 * max
-		return RandomFloat() * max;
+		static std::uniform_real_distribution<> dist(0.0f, max);
+		return dist(Generator());
 	}
 
 	inline float RandomFloat(float min, float max) {
+		if (min > max) std::swap(min, max);
 
-		// (0 <-> 1) * (max - min) + min
-		return RandomFloat() * (max - min) + min;
+		static std::uniform_real_distribution<> dist(min, max);
+		return dist(Generator());
+	}
+
+	inline bool RandomBool() {
+		static std::uniform_real_distribution<> dist(0.05);
+		return dist(Generator());
 	}
 
 	inline float RandomColor() {

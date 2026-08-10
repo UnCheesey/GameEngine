@@ -2,7 +2,10 @@
 #include "Rocket.h"
 #include "Assets.h"
 #include "Renderer.h"
+#include "ResourceManager.h"
 #include "Engine.h"
+
+using namespace nu;
 
 void Player::Update(float dt) {
 
@@ -50,7 +53,7 @@ void Player::SpawnBullet(float speed, float offset, float lifespan) {
     BulletDesc bulletDesc;
     bulletDesc.name = "Bullet";
     bulletDesc.tag = "PlayerBullet";
-    bulletDesc.model = assets::bulletModel;
+    bulletDesc.texture = Resources().Get<Texture>("Images/projectile02.png", Engine::Get().GetRenderer());
     bulletDesc.transform = m_transform;
     bulletDesc.transform.scale *= 0.8f;
     bulletDesc.speed = speed;
@@ -65,7 +68,7 @@ void Player::SpawnRocket(float speed, int pellet, float rocketLifeSpan, float pe
     BulletDesc pelletDesc;
     pelletDesc.name = "Pellet";
     pelletDesc.tag = "PlayerBullet";
-    pelletDesc.model = assets::bulletModel;
+    pelletDesc.texture = Resources().Get<Texture>("Images/projectile02.png", Engine::Get().GetRenderer());
     pelletDesc.transform = m_transform;
     pelletDesc.speed = speed;
     pelletDesc.lifespan = pelletLifeSpan;
@@ -74,7 +77,7 @@ void Player::SpawnRocket(float speed, int pellet, float rocketLifeSpan, float pe
     RocketDesc rocketDesc;
     rocketDesc.name = "Rocket";
     rocketDesc.tag = "PlayerRocket";
-    rocketDesc.model = assets::bulletModel;
+    rocketDesc.texture = Resources().Get<Texture>("Images/projectile02.png", Engine::Get().GetRenderer());
     rocketDesc.transform = m_transform;
     rocketDesc.speed = speed * 1.5f;
     rocketDesc.lifespan = rocketLifeSpan;

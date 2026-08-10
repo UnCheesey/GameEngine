@@ -1,17 +1,15 @@
+// Files use namespace fe::
+
 #include "Engine.h"
-
 #include "SpaceGame.h"
-
 #include <iostream>
 #include <vector>
 #include <map>
 
-// Files use namespace fe::
-
 using namespace nu;
 
 int main() {
-        
+            
     // ENGINE INITIALIZATION
     Engine::Get().Initialize();
 
