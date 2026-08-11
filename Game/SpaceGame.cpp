@@ -21,7 +21,7 @@ bool SpaceGame::Initialize() {
     m_gameOverText = new Text(Resources().GetWithID<Font>("gameover_font", "Fonts/Blaster.ttf", 64.0f));
     m_playText = new Text(Resources().GetWithID<Font>("play_font", "Fonts/Blaster.ttf", 32.0f));
 
-    m_playText->Create(Engine::Get().GetRenderer(), "Press SPACE to play", Color{ 1.0f, 1.0f, 1.0f });
+    m_playText->Create(Engine::Get().GetRenderer(), "Press SPACE to play", Color{ 1.0f, 0.5f, 0.01f });
 
     Engine::Get().GetAudio().AddSound("background", "Sounds/space_background.mp3", true);
     Engine::Get().GetAudio().AddSound("laser", "Sounds/laser.wav");
@@ -84,12 +84,12 @@ void SpaceGame::Update(float dt) {
 
 void SpaceGame::Draw(Renderer& renderer) {
 
-    renderer.DrawTexture(*Resources().Get<Texture>("Images/random.jpg", Engine::Get().GetRenderer()), 500, 500);
+    renderer.DrawTexture(*Resources().Get<Texture>("Images/background.png", Engine::Get().GetRenderer()), renderer.GetWidth() / 2, renderer.GetHeight() / 2);
 
     switch (m_gameState) {
 
     case SpaceGame::GameState::Title:
-        m_titleText->Create(Engine::Get().GetRenderer(), "Game Engine", Color{ 1.0f, 1.0f, 1.0f });
+        m_titleText->Create(Engine::Get().GetRenderer(), "Game Engine", Color{ 1.0f, 0.0f, 0.0f });
         m_titleText->Draw(renderer, (renderer.GetWidth() - m_titleText->GetTextWidth()) / 2.0f, (renderer.GetHeight() - m_titleText->GetTextHeight()) / 2.0f);
         m_playText->Draw(renderer, (renderer.GetWidth() - m_playText->GetTextWidth()) / 2.0f, (renderer.GetHeight() / 2.0f) + m_titleText->GetTextHeight());
         break;
@@ -108,7 +108,7 @@ void SpaceGame::Draw(Renderer& renderer) {
         m_weaponText->Draw(renderer, 30, m_scoreText->GetTextHeight() + 30);
         break;
     case SpaceGame::GameState::GameOver:
-        m_gameOverText->Create(Engine::Get().GetRenderer(), "Game Over", Color{ 1.0f, 1.0f, 1.0f });
+        m_gameOverText->Create(Engine::Get().GetRenderer(), "Game Over", Color{ 1.0f, 0.0f, 0.0f });
         m_gameOverText->Draw(renderer, (renderer.GetWidth() - m_gameOverText->GetTextWidth()) / 2.0f, (renderer.GetHeight() - m_gameOverText->GetTextHeight()) / 2.0f);
         m_playText->Draw(renderer, (renderer.GetWidth() - m_playText->GetTextWidth()) / 2.0f, (renderer.GetHeight() / 2.0f) + m_gameOverText->GetTextHeight());
         break;
@@ -124,8 +124,8 @@ void SpaceGame::Draw(Renderer& renderer) {
         nu::ActorDesc itemDesc;
         itemDesc.name = "Pickup";
         itemDesc.tag = "Pickup";
-        itemDesc.model = assets::playerModel;
-        itemDesc.transform = Transform{ Vector2{ nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeight())}, 0.0f, 10.0f };
+        itemDesc.texture = Resources().Get<Texture>("Images/ammo.png", Engine::Get().GetRenderer());
+        itemDesc.transform = Transform{ Vector2{ nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeight())}, 0.0f, 0.1f };
         itemDesc.lifespan = 6.0f;
 
         Pickup* pickup = new Pickup(itemDesc);
@@ -158,8 +158,7 @@ void SpaceGame::SpawnEnemy() {
     enemyDesc.name = "Enemy";
     enemyDesc.tag = "Enemy";
     enemyDesc.texture = Resources().Get<Texture>("Images/enemy.png", Engine::Get().GetRenderer());
-    enemyDesc.model = assets::enemyModel;
-    enemyDesc.transform = Transform{ Vector2{ nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeight())}, 90.0f, 1.0f };
+    enemyDesc.transform = Transform{ Vector2{ nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeight())}, 0.0f, 1.0f };
     enemyDesc.damping = 3.0f;
     enemyDesc.speed = RandomFloat(1000.0f, 1500.0f);
 

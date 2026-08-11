@@ -12,7 +12,9 @@ namespace nu {
 		return generator;
 	}
 
-	inline void SeedRandom(unsigned int seed) { Generator().seed(seed); }
+	inline void SeedRandom(unsigned int seed) {
+		Generator().seed(seed);
+	}
 
 	inline int RandomInt() {
 		static std::uniform_int_distribution<> dist;
@@ -25,7 +27,7 @@ namespace nu {
 	/// <param name="max">exclusive</param>
 	/// <returns>Random number 0 and max (exclusive)</returns>
 	inline int RandomInt(int max) {
-		static std::uniform_int_distribution<> dist(0, max - 1);
+		std::uniform_int_distribution<> dist(0, max - 1);
 		return dist(Generator());
 	}
 
@@ -38,7 +40,7 @@ namespace nu {
 	inline int RandomInt(int min, int max) {
 		if (min > max) std::swap(min, max);
 
-		static std::uniform_int_distribution<> dist(min, max);
+		std::uniform_int_distribution<> dist(min, max);
 		return dist(Generator());
 	}
 
@@ -48,19 +50,19 @@ namespace nu {
 	}
 
 	inline float RandomFloat(float max) {
-		static std::uniform_real_distribution<> dist(0.0f, max);
+		std::uniform_real_distribution<> dist(0.0f, max);
 		return static_cast<float>(dist(Generator()));
 	}
 
 	inline float RandomFloat(float min, float max) {
 		if (min > max) std::swap(min, max);
 
-		static std::uniform_real_distribution<> dist(min, max);
+		std::uniform_real_distribution<> dist(min, max);
 		return static_cast<float>(dist(Generator()));
 	}
 
 	inline bool RandomBool() {
-		static std::uniform_real_distribution<> dist(0.05);
+		std::uniform_real_distribution<> dist(0.05);
 		return dist(Generator());
 	}
 

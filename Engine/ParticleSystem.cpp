@@ -40,7 +40,7 @@ void ParticleSystem::Draw(const Renderer& renderer)
 		{
 			// set particle color and draw point at current position
 			renderer.SetColor(particle.color, 1.0f);
-			renderer.DrawPoint(particle.position.x, particle.position.y);
+			renderer.DrawFillRect(particle.position.x, particle.position.y, 3.5f, 3.5f);
 		}
 	}
 }

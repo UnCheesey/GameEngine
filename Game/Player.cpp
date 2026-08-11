@@ -13,10 +13,11 @@ void Player::Update(float dt) {
     float thrust = 0.0f;
     if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_W)) { 
         thrust = +m_speed; 
+
         // PARTICLES
         nu::Particle particle;
         particle.position = m_transform.position;
-        particle.color = { nu::RandomColor(), nu::RandomColor(), nu::RandomColor() };
+        particle.color = { 1.0f, 0.5f, 0.001f };
         particle.lifespan = nu::RandomFloat(0.5f, 1.5f);
         particle.velocity = { nu::RandomFloat(-200.0f, 200.0f), nu::RandomFloat(-50.0f, 50.0f) };
 
@@ -37,7 +38,6 @@ void Player::Update(float dt) {
     // FIRE
     Fire();
     
-
     if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_X)) {
         nu::Engine::Get().GetTime().SetTimeScale(0.5f);
     }else {

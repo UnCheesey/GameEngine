@@ -38,7 +38,7 @@ void Enemy::OnCollision(Actor* other) {
         {
             nu::Particle particle;
             particle.position = m_transform.position;
-            particle.color = { 1.0f, 1.0f, 1.0f };
+            particle.color = { nu::RandomColor(), nu::RandomColor(), nu::RandomColor() };
             particle.lifespan = nu::RandomFloat(0.5f, 2.0f);
             particle.velocity = { nu::RandomFloat(-600.0f, 600.0f), nu::RandomFloat(-600.0f, 600.0f) };
 

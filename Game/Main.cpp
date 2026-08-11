@@ -55,54 +55,11 @@ int main() {
     // ENGINE INITIALIZATION / SET DIRECTORY
     Engine::Get().Initialize();
     fe::SetWorkingDirectory("Assets");
-
-    // load the json data from a file
-    std::string buffer;
-    if (fe::ReadTextFile("data/data.json", buffer))
-    {
-        // show the contents of the json file (debug)
-        std::cout << buffer << std::endl;
-
-        // create json document from the json file contents
-        rapidjson::Document document;
-        if (json::Load("Data/data.json", document))
-        {
-            // read the age data (int) from the json
-            std::string name;
-            int age;            
-            float speed;
-            bool isAwake;
-            nu::Vector2 position;
-            nu::Vector3 color;
-
-            json::Read(document, "age", age);
-            // show the age data
-            std::cout << age << std::endl;
-
-            // read the json data
-            JSON_READ(document, name);
-            JSON_READ(document, age);
-            JSON_READ(document, speed);
-            JSON_READ(document, isAwake);
-            JSON_READ(document, position);
-            JSON_READ(document, color);
-
-            // show the data
-            std::cout << name << " " << age << " " << speed << " " << isAwake << std::endl;
-            std::cout << position.x << " " << position.y << std::endl;
-            std::cout << color.r << " " << color.g << " " << color.b << " " << std::endl;
-        }        
-    }
-
-    return 0;
-
+        
     // SPACE GAME INITIALIZATION
     SpaceGame game;
     game.Initialize();
 
-    // create texture, using shared_ptr so texture can be shared
-    std::shared_ptr<Texture> texture = std::make_shared<Texture>();
-    texture->Load("Images/large_grey_01.png", Engine::Get().GetRenderer());
 
     // PAINT INITIALIZATION
     /*std::vector<Vector2> points;
@@ -164,8 +121,6 @@ int main() {
 
         // DRAW SCENE
         game.Draw(Engine::Get().GetRenderer());
-        auto texture = Resources().Get<Texture>("Images/large_grey_01.png", Engine::Get().GetRenderer());
-        Engine::Get().GetRenderer().DrawTexture(*texture, 30, 30, 23.0f, 2.0f);
         
         // PRESENT
         Engine::Get().GetRenderer().Present();
