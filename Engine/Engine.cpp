@@ -13,7 +13,6 @@ namespace nu {
         m_input.Initialize();
 		m_audio.Initialize();
 		m_particleSystem.Initialize(5000);
-		fe::SetWorkingDirectory("Assets");
 
 		return true;
 	}

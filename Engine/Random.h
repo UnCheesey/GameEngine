@@ -44,19 +44,19 @@ namespace nu {
 
 	inline float RandomFloat() {
 		static std::uniform_real_distribution<> dist(0.0f, 1.0f);
-		return dist(Generator());
+		return static_cast<float>(dist(Generator()));
 	}
 
 	inline float RandomFloat(float max) {
 		static std::uniform_real_distribution<> dist(0.0f, max);
-		return dist(Generator());
+		return static_cast<float>(dist(Generator()));
 	}
 
 	inline float RandomFloat(float min, float max) {
 		if (min > max) std::swap(min, max);
 
 		static std::uniform_real_distribution<> dist(min, max);
-		return dist(Generator());
+		return static_cast<float>(dist(Generator()));
 	}
 
 	inline bool RandomBool() {

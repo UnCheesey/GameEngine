@@ -1,6 +1,9 @@
 #pragma once
+#include "Object.h"
 #include "Transform.h"
 #include "Resource.h"
+#include "Texture.h"
+#include "Model.h"
 #include <string>
 #include <memory>
 
@@ -14,11 +17,11 @@ namespace nu {
         Vector2 velocity{ 0.0f, 0.0f };
         float damping{ 0.0f };
         float lifespan{ 0.0f };
-        res_t<class Model> model;
-        res_t<class Texture> texture;
+        res_t<Model> model;
+        res_t<Texture> texture;
     };
 
-    class Actor {
+    class Actor : public Object{
     public:
         Actor() = default;
         virtual ~Actor() = default;
