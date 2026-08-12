@@ -2,6 +2,7 @@
 
 #include "Engine.h"
 #include "SpaceGame.h"
+#include "Player.h"
 #include <iostream>
 #include <vector>
 #include <map>
@@ -45,11 +46,36 @@ using namespace nu;
 //}
 
 int main() {
+    fe::SetWorkingDirectory("Assets");
 
-    /*Factory::Instance().Register<Actor>("Actor");
+    Factory::Instance().Register<Actor>("Actor");
+    Factory::Instance().Register<Object>("Object");
+    Factory::Instance().Register<Player>("Player");
+
     auto actor = Factory::Instance().Create<Actor>("Actor");
+    std::cout << actor->IsActive() << std::endl;
+    
+    auto object = Factory::Instance().Create("Object");
+    std::cout << object->IsActive() << std::endl;
 
-    return 0;*/
+    auto player = Factory::Instance().Create<Player>("Player");
+    std::cout << player->IsActive() << std::endl;
+
+
+    json::document_t document;
+    if (json::Load("Data/scene.json", document)) {
+
+        player->Read(document);
+        std::cout << "Name: " << player->GetName() << std::endl;
+        std::cout << "Active: " << player->IsActive() << std::endl;
+        std::cout << "Tag: " << player->GetTag() << std::endl;
+        std::cout << "Speed: " << player->GetSpeed() << std::endl;
+
+        std::cout << "Rotation: " << player->GetTransform().rotation << std::endl;
+        std::cout << "Scale: " << player->GetTransform().scale << std::endl;
+    }
+
+    return 0;
 
             
     // ENGINE INITIALIZATION / SET DIRECTORY
@@ -59,11 +85,6 @@ int main() {
     // SPACE GAME INITIALIZATION
     SpaceGame game;
     game.Initialize();
-
-
-    // PAINT INITIALIZATION
-    /*std::vector<Vector2> points;
-    Vector2 mousePos = { 0,0 };*/
 
     // MAIN LOOP
     bool quit = false;
@@ -81,40 +102,11 @@ int main() {
             }
         }
         
-        // Engine Update (audio, input, time)
+        // ENGINE UPDATE (audio, input, time)
         Engine::Get().Update();
         float dt = Engine::Get().GetTime().GetDeltaTime();
         game.Update(dt);
-
-        // PAINT LOOP
-        {// LINE DRAWING DRAW
-        /*if (Engine::Get().GetInput().GetButtonDown(nu::Input::MouseButton::Left)) {
-
-            if(points.empty()){
-                points.push_back(Engine::Get().GetInput().GetMousePos());
-            }else {
-
-                Vector2 v = points.back() - Engine::Get().GetInput().GetMousePos();
-                if (v.Length() > 10.0f) {
-                    points.push_back(Engine::Get().GetInput().GetMousePos());
-                }
-            }
-        }*/
-
-        // LINE DRAWING ERASE
-        /*if (Engine::Get().GetInput().GetButtonDown(nu::Input::MouseButton::Right)) {
-                if (!points.empty()) {
-                    points.pop_back();
-                }
-        }*/
-
-        // LINE DRAWING ADD POINTS
-        /*for (int i = 0; i < (int)points.size() - 1; i++) {
-            Engine::Get().GetRenderer().SetColor(0.5f, 0.2f, 0.4f);
-            Engine::Get().GetRenderer().DrawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
-        }*/
-        }
-        
+                        
         // RENDER
         Engine::Get().GetRenderer().SetColor(0.0f, 0.0f, 0.0f);
         Engine::Get().GetRenderer().Clear();

@@ -51,7 +51,6 @@ void Player::Update(float dt) {
 
 void Player::SpawnBullet(float speed, float offset, float lifespan) {
     BulletDesc bulletDesc;
-    bulletDesc.name = "Bullet";
     bulletDesc.tag = "PlayerBullet";
     bulletDesc.texture = Resources().Get<Texture>("Images/projectile02.png", Engine::Get().GetRenderer());
     bulletDesc.transform = m_transform;
@@ -64,9 +63,8 @@ void Player::SpawnBullet(float speed, float offset, float lifespan) {
     m_scene->AddActor(std::move(std::make_unique<Bullet>(bulletDesc)));
 }
 
-void Player::SpawnRocket(float speed, int pellet, float rocketLifeSpan, float pelletLifeSpan) {
+void Player::SpawnRocket(float speed, int pelletAmount, float rocketLifeSpan, float pelletLifeSpan) {
     BulletDesc pelletDesc;
-    pelletDesc.name = "Pellet";
     pelletDesc.tag = "PlayerBullet";
     pelletDesc.texture = Resources().Get<Texture>("Images/projectile02.png", Engine::Get().GetRenderer());
     pelletDesc.transform = m_transform;
@@ -75,14 +73,13 @@ void Player::SpawnRocket(float speed, int pellet, float rocketLifeSpan, float pe
     pelletDesc.transform.scale *= 0.3f;
 
     RocketDesc rocketDesc;
-    rocketDesc.name = "Rocket";
     rocketDesc.tag = "PlayerRocket";
     rocketDesc.texture = Resources().Get<Texture>("Images/projectile02.png", Engine::Get().GetRenderer());
     rocketDesc.transform = m_transform;
     rocketDesc.speed = speed * 1.5f;
     rocketDesc.lifespan = rocketLifeSpan;
     rocketDesc.pelletDesc = pelletDesc;
-    rocketDesc.pelletAmount = pellet;
+    rocketDesc.pelletAmount = pelletAmount;
 
     nu::Engine::Get().GetAudio().PlaySound("laser");
     m_scene->AddActor(std::move(std::make_unique<Rocket>(rocketDesc)));
@@ -130,6 +127,12 @@ void Player::OnCollision(Actor* other) {
         SetDestroyed();
         other->SetDestroyed();
     }
+}
+
+void Player::Read(const json::value_t& value){
+    Actor::Read(value);
+
+    JSON_READ_NAME(value, "speed", m_speed);
 }
 
 std::string Player::WeaponToString()

@@ -29,7 +29,7 @@ namespace nu {
             requires std::derived_from<T, Object>
         void Register(const std::string& name);
 
-        template <typename T>
+        template <typename T = Object>
             requires std::derived_from<T, Object>
         std::unique_ptr<T> Create(const std::string& name);
 
@@ -54,8 +54,8 @@ namespace nu {
     template<typename T>
         requires std::derived_from<T, Object>
     inline std::unique_ptr<T> Factory::Create(const std::string& name) {
-        std::string lowerName = ToLower(name);
 
+        std::string lowerName = ToLower(name);
         if (!m_registry.contains(lowerName)) {
             std::cerr << "Object not registered: " << name << std::endl;
             return std::unique_ptr<T>();
@@ -69,7 +69,7 @@ namespace nu {
 
         // check if object is derived from t
         T* derived = dynamic_cast<T*>(object.get());
-        /*
+        
         if (derived) {
             // release unique ptr ownership
             object.release();
@@ -77,9 +77,8 @@ namespace nu {
             // create new unique ptr with derived ptr
             return std::unique_ptr<T>(derived);
         }else {
-            std::cerr << "Object not registered: " << name << std::endl;
+            std::cerr << "Object not derived: " << name << std::endl;
         }
-        */
 
         return std::unique_ptr<T>();
     }

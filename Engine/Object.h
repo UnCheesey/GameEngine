@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "Json.h"
 
 namespace nu {
 	class Object {
@@ -10,6 +11,11 @@ namespace nu {
 		const std::string& GetName() const { return m_name; }
 		bool IsActive() const { return m_active; }
 		void SetActive(bool active = true) { m_active = active; }
+
+		virtual void Read(const json::value_t& value) {
+			JSON_READ_NAME_REQ(value, "name", m_name);
+			JSON_READ_NAME_REQ(value, "active", m_active);
+		}
 
 	protected:
 		std::string m_name;

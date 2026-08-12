@@ -1,0 +1,11 @@
+{
+  "name": "Diego Macias",
+  "tag": "Student",
+  "active": true,
+  "speed": 750.0,
+  "transform": {
+    "position": [ 2.4, 5.3 ],
+    "rotation": 45,
+    "scale": 2
+  }
+}

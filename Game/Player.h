@@ -21,6 +21,7 @@ public:
         m_speed(playerDesc.speed) {
     }
 
+    const float GetSpeed() const { return m_speed; }
 
     void SetWeaponState(WeaponState weaponState) { m_weaponState = weaponState; }
     WeaponState GetWeaponState() const { return m_weaponState; }
@@ -31,6 +32,8 @@ public:
 
     void Fire();
     void OnCollision(Actor* other) override;
+
+    void Read(const json::value_t& value) override;
 
     std::string WeaponToString();
 

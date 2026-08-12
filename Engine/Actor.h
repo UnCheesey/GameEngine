@@ -11,7 +11,6 @@ namespace nu {
     class Scene;
 
     struct ActorDesc {
-        std::string name;
         std::string tag;
         Transform transform;
         Vector2 velocity{ 0.0f, 0.0f };
@@ -28,7 +27,6 @@ namespace nu {
 
         Actor(const ActorDesc& actorDesc) :
             m_tag(actorDesc.tag),
-            m_name(actorDesc.name),
             m_transform(actorDesc.transform),
             m_velocity(actorDesc.velocity),
             m_damping(actorDesc.damping),
@@ -55,24 +53,29 @@ namespace nu {
         const std::string& GetName() const { return m_name; }
         const std::string& GetTag() const { return m_tag; }
 
-        Scene* GetScene() { return m_scene; }
+        const float GetDamping() const { return m_damping; }
+
+        const float GetLifespan() const { return m_lifespan; }
         
+        void SetDestroyed(bool destroy = true) { m_destroyed = destroy; }
+        bool GetDestroyed() const { return m_destroyed; }
+
+        virtual void Read(const json::value_t& value) override;
+
         float GetRadius() const;
         void SetModel(std::shared_ptr<Model> model) { m_model = model; }
 
-        void SetDestroyed(bool destroy = true) { m_destroyed = destroy; }
-        bool GetDestroyed() const { return m_destroyed; }
+        Scene* GetScene() { return m_scene; }
 
         friend Scene;
 
     protected:
-        std::string m_name;
         std::string m_tag;
 
         Transform m_transform;
-        Vector2 m_velocity{ 0, 0 };
+        Vector2 m_velocity{ 0.0f, 0.0f };
         float m_damping{ 0.0f };
-        float m_lifespan{ 0 };
+        float m_lifespan{ 0.0f };
         bool m_destroyed{ false };
 
         res_t<Model> m_model;

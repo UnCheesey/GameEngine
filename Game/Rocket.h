@@ -19,7 +19,7 @@ public:
 private:
 	void Explode();
 
-	int m_pelletAmount = 5;
+	int m_pelletAmount;
 	BulletDesc m_pelletDesc;
 
 };

@@ -4,7 +4,7 @@
 
 namespace nu {
 	inline std::string ToLower(const std::string& str) {
-		std::string lower;
+		std::string lower = str;
 
 		for (auto& c : lower) {
 			c = std::tolower(c);
@@ -13,7 +13,7 @@ namespace nu {
 	}
 
 	inline std::string ToUpper(const std::string& str) {
-		std::string upper;
+		std::string upper = str;
 
 		for (auto& c : upper) {
 			c = std::toupper(c);
