@@ -10,6 +10,8 @@ public:
 		m_weaponType = static_cast<WeaponState>(nu::RandomInt(4));
 	}
 
+	CLASS_PROTOTYPE(Pickup)
+
 	void OnCollision(Actor* actor) override;
 private:
 	WeaponState m_weaponType = WeaponState::Default;

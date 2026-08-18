@@ -16,6 +16,8 @@ public:
 	{}
 	~Rocket() override;
 
+	CLASS_PROTOTYPE(Rocket)
+
 private:
 	void Explode();
 

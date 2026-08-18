@@ -1,11 +1,53 @@
 {
-  "name": "Diego Macias",
-  "tag": "Student",
-  "active": true,
-  "speed": 750.0,
-  "transform": {
-    "position": [ 2.4, 5.3 ],
-    "rotation": 45,
-    "scale": 2
-  }
+  "actors": [
+    {
+      "type": "Player",
+      "prototype": true,
+      "name": "PlayerPrototype",
+      "tag": "Player",
+      "active": true,
+      "speed": 2000.0,
+      "damping": 3.0,
+      "transform": {
+        "position": [ 640.0, 512.0 ],
+        "rotation": -90,
+        "scale": 1
+      },
+      "components": [
+        {
+          "type": "SpriteRendererComponent",
+          "texture":  "Images/player.png"
+        }
+
+      ]
+    },
+    {
+      "type": "Enemy",
+      "prototype": true,
+      "name": "EnemyPrototype",
+      "tag": "Enemy",
+      "active": true,
+      "speed": 2000.0,
+      "damping": 3.0,
+      "transform": {
+        "position": [ 640.0, 512.0 ],
+        "rotation": -90,
+        "scale": 1
+      }
+    },
+    {
+      "name": "BulletPrototype",
+      "type": "Bullet",
+      "tag": "Bullet",
+      "active": true,
+      "speed": 2000.0,
+      "damping": 3.0,
+      "texture": "Images/projectile02.png",
+      "transform": {
+        "position": [ 640.0, 512.0 ],
+        "rotation": 45,
+        "scale": 1
+      }
+    }
+  ]
 }

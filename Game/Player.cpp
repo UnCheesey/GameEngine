@@ -1,11 +1,10 @@
 #include "Player.h"
 #include "Rocket.h"
 #include "Assets.h"
-#include "Renderer.h"
 #include "ResourceManager.h"
 #include "Engine.h"
 
-using namespace nu;
+FACTORY_REGISTER(Player) 
 
 void Player::Update(float dt) {
 
@@ -52,7 +51,7 @@ void Player::Update(float dt) {
 void Player::SpawnBullet(float speed, float offset, float lifespan) {
     BulletDesc bulletDesc;
     bulletDesc.tag = "PlayerBullet";
-    bulletDesc.texture = Resources().Get<Texture>("Images/projectile02.png", Engine::Get().GetRenderer());
+    bulletDesc.texture = nu::Resources().Get<nu::Texture>("Images/projectile02.png", nu::Engine::Get().GetRenderer());
     bulletDesc.transform = m_transform;
     bulletDesc.transform.scale *= 0.8f;
     bulletDesc.speed = speed;
@@ -66,7 +65,7 @@ void Player::SpawnBullet(float speed, float offset, float lifespan) {
 void Player::SpawnRocket(float speed, int pelletAmount, float rocketLifeSpan, float pelletLifeSpan) {
     BulletDesc pelletDesc;
     pelletDesc.tag = "PlayerBullet";
-    pelletDesc.texture = Resources().Get<Texture>("Images/projectile02.png", Engine::Get().GetRenderer());
+    pelletDesc.texture = nu::Resources().Get<nu::Texture>("Images/projectile02.png", nu::Engine::Get().GetRenderer());
     pelletDesc.transform = m_transform;
     pelletDesc.speed = speed;
     pelletDesc.lifespan = pelletLifeSpan;
@@ -74,7 +73,7 @@ void Player::SpawnRocket(float speed, int pelletAmount, float rocketLifeSpan, fl
 
     RocketDesc rocketDesc;
     rocketDesc.tag = "PlayerRocket";
-    rocketDesc.texture = Resources().Get<Texture>("Images/projectile02.png", Engine::Get().GetRenderer());
+    rocketDesc.texture = nu::Resources().Get<nu::Texture>("Images/projectile02.png", nu::Engine::Get().GetRenderer());
     rocketDesc.transform = m_transform;
     rocketDesc.speed = speed * 1.5f;
     rocketDesc.lifespan = rocketLifeSpan;
@@ -131,17 +130,17 @@ void Player::OnCollision(Actor* other) {
 
 void Player::Read(const json::value_t& value){
     Actor::Read(value);
-
     JSON_READ_NAME(value, "speed", m_speed);
 }
 
 std::string Player::WeaponToString()
 {
-    switch (m_weaponState) {
-    case WeaponState::Default: return "Default";
-    case WeaponState::Multishot:  return "Multishot";
-    case WeaponState::Rapid:   return "Rapid";
-    case WeaponState::Rocket:  return "Rocket";
-    default:                   return "Unknown";
-    }
+        switch (m_weaponState) {
+        case WeaponState::Default: return "Default";
+        case WeaponState::Multishot:  return "Multishot";
+        case WeaponState::Rapid:   return "Rapid";
+        case WeaponState::Rocket:  return "Rocket";
+        default:                   return "Default";
+        }
+
 }

@@ -13,6 +13,8 @@ bool SpaceGame::Initialize() {
     
     m_scene = new Scene();
     m_scene->SetGame(this);
+    m_scene->Load("Data/scene.json");
+    
 
     m_titleText = new Text(Resources().GetWithID<Font>("title_font", "Fonts/Blaster.ttf", 64.0f));
     m_scoreText = new Text(Resources().GetWithID<Font>("game_font", "Fonts/Blaster.ttf", 32.0f));
@@ -63,9 +65,9 @@ void SpaceGame::Update(float dt) {
             m_pickUpTimer = RandomFloat(8.0f, 15.0f);
         }
 
-        if(m_scene->GetActorByName<Player>("Player") == nullptr) {
+        if (m_scene->GetActorByTag<Player>("Player") == nullptr) {
             OnPlayerDead();
-		}
+        }
 
         break;
     case GameState::GameOver:
@@ -104,8 +106,8 @@ void SpaceGame::Draw(Renderer& renderer) {
         m_livesText->Create(renderer, "Score: " + std::to_string(m_score), { 1.0f, 1.0f, 1.0f });
         m_livesText->Draw(renderer, renderer.GetWidth() - m_livesText->GetTextWidth() - 30.0f, 30.0f);
 
-        m_weaponText->Create(renderer, "Weapon: " + m_player->WeaponToString(), { 1.0f, 1.0f, 1.0f });
-        m_weaponText->Draw(renderer, 30, m_scoreText->GetTextHeight() + 30);
+        /*m_weaponText->Create(renderer, "Weapon: " + m_player->WeaponToString(), { 1.0f, 1.0f, 1.0f });
+        m_weaponText->Draw(renderer, 30, m_scoreText->GetTextHeight() + 30);*/
         break;
     case SpaceGame::GameState::GameOver:
         m_gameOverText->Create(Engine::Get().GetRenderer(), "Game Over", Color{ 1.0f, 0.0f, 0.0f });
@@ -137,27 +139,14 @@ void SpaceGame::OnPlayerDead() {
 }
 
 void SpaceGame::SpawnPlayer() {
-    PlayerDesc playerDesc;
-    playerDesc.tag = "Player";
-    //playerDesc.model = assets::playerModel;
-    playerDesc.texture = Resources().Get<Texture>("Images/player.png", Engine::Get().GetRenderer());
-    playerDesc.transform = Transform{ Vector2 { 640.0f, 512.0f }, 0.0f, 1.0f };
-    playerDesc.velocity = Vector2{ 0.0f, 0.0f };
-    playerDesc.damping = 3.0f;
-    playerDesc.speed = 2500.0f;
-
-    std::unique_ptr<Player> player = std::make_unique<Player>(playerDesc);
-    m_player = player.get();
-    m_scene->AddActor(std::move(player));
+    auto actor = Factory::Instance().Create<Player>("PlayerPrototype");
+    m_scene->AddActor(std::move(actor));
 }
 
 void SpaceGame::SpawnEnemy() {
-    EnemyDesc enemyDesc;
-    enemyDesc.tag = "Enemy";
-    enemyDesc.texture = Resources().Get<Texture>("Images/enemy.png", Engine::Get().GetRenderer());
-    enemyDesc.transform = Transform{ Vector2{ nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeight())}, 0.0f, 1.0f };
-    enemyDesc.damping = 3.0f;
-    enemyDesc.speed = RandomFloat(1000.0f, 1500.0f);
-
-    m_scene->AddActor(std::move(std::make_unique<Enemy>(enemyDesc)));
+    auto actor = Factory::Instance().Create<Enemy>("PlayerPrototype");
+    if (actor) {
+    actor->SetPosition({ nu::RandomFloat(Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat(Engine::Get().GetRenderer().GetHeight()) });
+    m_scene->AddActor(std::move(actor));    
+    }
 }

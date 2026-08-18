@@ -14,7 +14,10 @@ public:
         m_speed(enemyDesc.speed) {
     }
 
+    CLASS_PROTOTYPE(Enemy)
+
     void Update(float dt) override;
+    void Read(const json::value_t& value) override;
     void OnCollision(Actor* other) override;
 
 private:

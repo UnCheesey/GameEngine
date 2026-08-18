@@ -3,84 +3,22 @@
 #include "Engine.h"
 #include "SpaceGame.h"
 #include "Player.h"
+#include "Enemy.h"
+#include "Bullet.h"
 #include <iostream>
 #include <vector>
 #include <map>
 
 using namespace nu;
 
-//class Animal {
-//
-//public:
-//    virtual void Speak() {
-//        std::cout << "Animal speaks" << std::endl;
-//    }
-//};
-//
-//class Cat : public Animal {
-//    void Speak() override {
-//        std::cout << "Meow" << std::endl;
-//    }
-//};
-//
-//class Dog : public Animal {
-//    void Speak() override {
-//        std::cout << "Woof" << std::endl;
-//    }
-//};
-//
-//class Bird : public Animal {
-//    void Speak() override {
-//        std::cout << "Chirp" << std::endl;
-//    }
-//};
-//
-//Animal* AnimalFactory(const std::string& id) {
-//    Animal* animal = nullptr;
-//
-//    if (nu::ToLower(id) == "cat") animal = new Cat;
-//    else if (nu::EqualsIgnoreCase(id, "Dog")) animal = new Dog;
-//    else if (id == "Bird") animal = new Bird;
-//
-//    return animal;
-//}
-
 int main() {
+    // SET DIRECTORY
     fe::SetWorkingDirectory("Assets");
-
-    Factory::Instance().Register<Actor>("Actor");
-    Factory::Instance().Register<Object>("Object");
-    Factory::Instance().Register<Player>("Player");
-
-    auto actor = Factory::Instance().Create<Actor>("Actor");
-    std::cout << actor->IsActive() << std::endl;
-    
-    auto object = Factory::Instance().Create("Object");
-    std::cout << object->IsActive() << std::endl;
-
-    auto player = Factory::Instance().Create<Player>("Player");
-    std::cout << player->IsActive() << std::endl;
-
-
-    json::document_t document;
-    if (json::Load("Data/scene.json", document)) {
-
-        player->Read(document);
-        std::cout << "Name: " << player->GetName() << std::endl;
-        std::cout << "Active: " << player->IsActive() << std::endl;
-        std::cout << "Tag: " << player->GetTag() << std::endl;
-        std::cout << "Speed: " << player->GetSpeed() << std::endl;
-
-        std::cout << "Rotation: " << player->GetTransform().rotation << std::endl;
-        std::cout << "Scale: " << player->GetTransform().scale << std::endl;
-    }
-
-    return 0;
 
             
-    // ENGINE INITIALIZATION / SET DIRECTORY
+    // ENGINE INITIALIZATION 
     Engine::Get().Initialize();
-    fe::SetWorkingDirectory("Assets");
+    
         
     // SPACE GAME INITIALIZATION
     SpaceGame game;

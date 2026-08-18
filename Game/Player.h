@@ -21,6 +21,8 @@ public:
         m_speed(playerDesc.speed) {
     }
 
+    CLASS_PROTOTYPE(Player)
+
     const float GetSpeed() const { return m_speed; }
 
     void SetWeaponState(WeaponState weaponState) { m_weaponState = weaponState; }

@@ -11,12 +11,15 @@ namespace nu {
 	public:
 		void AddActor(std::unique_ptr<Actor> actor);
 		void RemoveAllActors();
-
+		bool Load(const std::string& sceneName);
 		void Update(float dt);
 		void Draw(const class Renderer& renderer);
 
 		template<typename T>
 		T* GetActorByName(const std::string& name);
+
+		template<typename T>
+		T* GetActorByTag(const std::string& tag);
 
 		void SetGame(class Game* game) { m_game = game; }
 		class Game* GetGame() { return m_game;  }
@@ -37,6 +40,19 @@ namespace nu {
 		for (auto& actor : m_actors) {
 			T* actorT = dynamic_cast<T*>(actor.get());
 			if (actorT && actorT->m_name == name) {
+				return actorT;
+			}
+		}
+
+		return nullptr;
+	}
+
+	template<typename T>
+	inline T* Scene::GetActorByTag(const std::string& tag)
+	{ 
+		for (auto& actor :m_actors) {
+			T* actorT = dynamic_cast<T*>(actor.get());
+			if (actorT && actorT->m_tag == tag) {
 				return actorT;
 			}
 		}

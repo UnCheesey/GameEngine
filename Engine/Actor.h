@@ -1,14 +1,17 @@
 #pragma once
 #include "Object.h"
+#include "Framework/Component.h"
 #include "Transform.h"
 #include "Resource.h"
-#include "Texture.h"
 #include "Model.h"
 #include <string>
 #include <memory>
+#include <vector>
 
 namespace nu {
     class Scene;
+    class Texture;
+    class Renderer;
 
     struct ActorDesc {
         std::string tag;
@@ -30,15 +33,15 @@ namespace nu {
             m_transform(actorDesc.transform),
             m_velocity(actorDesc.velocity),
             m_damping(actorDesc.damping),
-            m_lifespan(actorDesc.lifespan),
-            m_model(actorDesc.model),
-            m_texture(actorDesc.texture){
+            m_lifespan(actorDesc.lifespan){
         }
+
+        CLASS_PROTOTYPE(Actor)
 
         Actor(const Transform& transform) : m_transform(transform) {}
 
         virtual void Update(float dt);
-        virtual void Draw(const class Renderer& render) const;
+        virtual void Draw(const Renderer& render) const;
 
         virtual void OnCollision(Actor* other) {};
 
@@ -63,7 +66,6 @@ namespace nu {
         virtual void Read(const json::value_t& value) override;
 
         float GetRadius() const;
-        void SetModel(std::shared_ptr<Model> model) { m_model = model; }
 
         Scene* GetScene() { return m_scene; }
 
@@ -78,8 +80,7 @@ namespace nu {
         float m_lifespan{ 0.0f };
         bool m_destroyed{ false };
 
-        res_t<Model> m_model;
-        res_t<Texture> m_texture;
+        std::vector<Component*> m_components;
 
         Scene* m_scene = nullptr;
     };

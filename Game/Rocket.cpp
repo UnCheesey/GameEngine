@@ -1,5 +1,8 @@
 #include "Rocket.h"
 #include "Scene.h"
+#include "Factory.h"
+
+FACTORY_REGISTER(Rocket)
 
 Rocket::~Rocket() {
 	Explode();

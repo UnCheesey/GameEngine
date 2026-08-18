@@ -1,4 +1,7 @@
 #include "Pickup.h"
+#include "Factory.h"
+
+FACTORY_REGISTER(Pickup)
 
 void Pickup::OnCollision(Actor* actor) {
 	if (actor->GetTag() == "Player") {
